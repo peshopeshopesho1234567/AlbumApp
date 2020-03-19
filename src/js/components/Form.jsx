@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 
+import Albums from './Albums.jsx';
+import Images from './Images.jsx';
+
 import albumAppReducer from '../store/reducers/reducers';
 import { addData, selectAlbum } from '../store/actions/actionCreators';
 
@@ -29,15 +32,13 @@ class Form extends Component {
     const { albums, imagesFromSelectedAlbum } = this.props;
     return (
       <div>
-        {albums && Object.keys(albums).map(albumId => <div key={albumId} onClick={this.handleAlbumSelect.bind(this, albumId)}>{albumId}</div>)}
-        <div>
-          {imagesFromSelectedAlbum && imagesFromSelectedAlbum.map(image => (
-            <div key={image.url}>
-              <img src={image.thumbnailUrl} />
-              <p>{image.title}</p>
-            </div>
-          ))}
-        </div>
+        <Albums 
+          albums={albums}
+          handleAlbumSelect={this.handleAlbumSelect.bind(this)}
+        />
+        <Images
+          images={imagesFromSelectedAlbum}
+        />
       </div>
     );
   }

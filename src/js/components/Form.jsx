@@ -11,15 +11,6 @@ import { addData, selectAlbum } from '../store/actions/actionCreators';
 const store = createStore(albumAppReducer);
 
 class Form extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      value: ""
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-  }
 
   componentDidMount() {
     axios.get('https://jsonplaceholder.typicode.com/photos')
@@ -28,23 +19,17 @@ class Form extends Component {
       });
   }
 
-  handleChange(event) {
-    const { value } = event.target;
-    this.setState(() => {
-      return {
-        value
-      };
-    });
+  handleAlbumSelect(albumId) {
+    this.props.selectAlbum(albumId);
   }
 
   render() {
     const { albums, imagesFromSelectedAlbum } = this.props;
-    console.log('the images from the selected album in the render method are', imagesFromSelectedAlbum);
     return (
       <div>
-        {albums && Object.keys(albums).map(albumId => <div key={albumId} onClick={() => this.props.selectAlbum(albumId)}>{albumId}</div>)}
+        {albums && Object.keys(albums).map(albumId => <div key={albumId} onClick={this.handleAlbumSelect.bind(this, albumId)}>{albumId}</div>)}
         <div>
-          {imagesFromSelectedAlbum && imagesFromSelectedAlbum.map(image => <img key={image.url} src={image.url}/>)}
+          {imagesFromSelectedAlbum && imagesFromSelectedAlbum.map(image => <img key={image.url} src={image.thumbnailUrl}/>)}
         </div>
       </div>
     );

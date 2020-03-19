@@ -11,10 +11,11 @@ const albumAppReducer = (state = initialState, action) => {
       const { payload } = action;
       const albums = {};
       payload.forEach(picture => {
-        if (!albums[picture.albumId - 1]) {
-          albums[picture.albumId - 1] = [];
+        const albumIndex = picture.albumId - 1;
+        if (!albums[albumIndex]) {
+          albums[albumIndex] = [];
         }
-        albums[picture.albumId - 1].push(picture);
+        albums[albumIndex].push(picture);
         albums['favourites'] = [];
       });
       return {

@@ -29,7 +29,12 @@ class Form extends Component {
       <div>
         {albums && Object.keys(albums).map(albumId => <div key={albumId} onClick={this.handleAlbumSelect.bind(this, albumId)}>{albumId}</div>)}
         <div>
-          {imagesFromSelectedAlbum && imagesFromSelectedAlbum.map(image => <img key={image.url} src={image.thumbnailUrl}/>)}
+          {imagesFromSelectedAlbum && imagesFromSelectedAlbum.map(image => (
+            <div key={image.url}>
+              <img src={image.thumbnailUrl} />
+              <p>{image.title}</p>
+            </div>
+          ))}
         </div>
       </div>
     );

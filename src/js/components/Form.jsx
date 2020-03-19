@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import axios from 'axios';
 
 import albumAppReducer from '../store/reducers/reducers';
-import { addData } from '../store/actions/actionCreators';
+import { addData, selectAlbum } from '../store/actions/actionCreators';
 
 const store = createStore(albumAppReducer);
 
@@ -42,7 +42,7 @@ class Form extends Component {
     console.log('the images from the selected album in the render method are', imagesFromSelectedAlbum);
     return (
       <div>
-        {albums && Object.keys(albums).map(albumId => <div key={albumId}>{albumId}</div>)}
+        {albums && Object.keys(albums).map(albumId => <div key={albumId} onClick={() => this.props.selectAlbum(albumId)}>{albumId}</div>)}
         <div>
           {imagesFromSelectedAlbum && imagesFromSelectedAlbum.map(image => <img key={image.url} src={image.url}/>)}
         </div>
@@ -58,7 +58,7 @@ const mapStateToProps = state => {
   }
 };
 
-const mapDispatchToProps = { addData };
+const mapDispatchToProps = { addData, selectAlbum };
 
 const ConnectedForm = connect(mapStateToProps, mapDispatchToProps)(Form);
 export default ConnectedForm;

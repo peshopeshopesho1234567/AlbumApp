@@ -8,6 +8,8 @@ import axios from 'axios';
 import albumAppReducer from '../store/reducers/reducers';
 import { addData, selectAlbum } from '../store/actions/actionCreators';
 
+import '../../styles/app.css';
+
 const store = createStore(albumAppReducer);
 
 class Form extends Component {

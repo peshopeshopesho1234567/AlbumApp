@@ -10,15 +10,18 @@ import {
 } from '../store/actions/actionCreators';
 
 const Tile = ({ image, addImageToFavourites, removeImageFromFavourites, setImageFaved, setImageUnfaved }) => (
-  <div style={{ float: 'left', width: '400px', margin: '10px' }}>
-    <Image
+  <div style={{ float: 'left', width: '150px', margin: '10px' }}>
+    {/* <Image
       src={image.thumbnailUrl}
       width="150"
       height="150"
       alt="My awesome image"
-    />
-    <h5 style={{ height: '10px' }}>{image.title}</h5>
-    <button onClick={() => {
+    /> */}
+    <img src={image.thumbnailUrl} />
+    <h5 style={{ height: '10px', margin: 0 }}>{image.title}</h5>
+    <button 
+    style={{ position: 'relative', top: '-164px' }}
+    onClick={() => {
       if (image.isFavorited) {
         removeImageFromFavourites(image);
         setImageUnfaved(image);

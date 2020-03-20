@@ -28,8 +28,9 @@ const albumAppReducer = (state = initialState, action) => {
           ...picture,
           isFavorited: false
         });
-        albums['Favourites'] = [];
       });
+      
+      albums['Favourites'] = [];
       return {
         ...state,
         selectedAlbumName: FIRST_ALBUM_INDEX,

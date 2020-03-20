@@ -9,7 +9,16 @@ import {
 } from '../store/actions/actionCreators';
 
 const Images = ({ images, addImageToFavourites, removeImageFromFavourites, setImageFaved, setImageUnfaved }) => (
-  <div>
+  <div style={{ 
+      float: 'right', 
+      background: 'tomato',
+      width: '90vw', 
+      height: '100vh', 
+      boxSizing: 'border-box', 
+      margin: 0, 
+      padding: 0,
+      overflowY: 'scroll'
+    }}>
     {images && images.map(image => (
       <div key={image.url}>
         <img src={image.thumbnailUrl} />

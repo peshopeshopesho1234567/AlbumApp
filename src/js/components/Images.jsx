@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { 
   addImageToFavourites, 
   removeImageFromFavourites,
-  setIsImageFaved
+  setIsImageFaved,
+  setImageFaved,
+  setImageUnfaved
 } from '../store/actions/actionCreators';
 
-const Images = ({ images, addImageToFavourites, removeImageFromFavourites, setIsImageFaved }) => (
+const Images = ({ images, addImageToFavourites, removeImageFromFavourites, setImageFaved, setImageUnfaved }) => (
   <div>
     {images && images.map(image => (
       <div key={image.url}>
@@ -16,10 +18,10 @@ const Images = ({ images, addImageToFavourites, removeImageFromFavourites, setIs
         <button onClick={() => {
           if (image.isFavorited) {
             removeImageFromFavourites(image);
-            setIsImageFaved({ image, isFavorited: false });
+            setImageUnfaved(image);
           } else {
             addImageToFavourites(image);
-            setIsImageFaved({ image, isFavorited: true });
+            setImageFaved(image);
           }
         }}>{!image.isFavorited ? 'Favorite' : 'Unfavorite'}</button>
       </div>
@@ -30,7 +32,9 @@ const Images = ({ images, addImageToFavourites, removeImageFromFavourites, setIs
 const mapDispatchToProps = { 
   addImageToFavourites, 
   removeImageFromFavourites,
-  setIsImageFaved
+  setIsImageFaved,
+  setImageFaved,
+  setImageUnfaved
 };
 
 export default connect(null, mapDispatchToProps)(Images);

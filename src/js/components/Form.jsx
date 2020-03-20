@@ -28,7 +28,6 @@ class Form extends Component {
   }
 
   handleAlbumSelect(albumId) {
-    console.log('selecting album with id of', albumId);
     this.props.selectAlbum(albumId);
   }
 
@@ -49,7 +48,6 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('the state is', state);
   return {
     albums: state.albums,
     imagesFromSelectedAlbum: state.imagesFromSelectedAlbum

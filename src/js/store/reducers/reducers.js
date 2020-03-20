@@ -1,12 +1,15 @@
-import { 
-  ADD_DATA, 
-  SELECT_ALBUM, 
+import {
+  ADD_DATA,
+  SELECT_ALBUM,
   ADD_IMAGE_TO_FAVOURITES,
   REMOVE_IMAGE_FROM_FAVOURITES,
-  SET_IS_IMAGE_FAVED
+  SET_IS_IMAGE_FAVED,
+  SET_IMAGE_FAVED,
+  SET_IMAGE_UNFAVED
 } from '../actions/actionTypes';
 
 const initialState = {
+  selectedAlbumName: '',
   albums: {},
   imagesFromSelectedAlbum: [],
 };
@@ -30,6 +33,7 @@ const albumAppReducer = (state = initialState, action) => {
       });
       return {
         ...state,
+        selectedAlbumName: FIRST_ALBUM_INDEX,
         albums,
         imagesFromSelectedAlbum: albums[FIRST_ALBUM_INDEX]
       };
@@ -37,6 +41,7 @@ const albumAppReducer = (state = initialState, action) => {
       const { albumId } = action;
       return {
         ...state,
+        selectedAlbumName: albumId,
         imagesFromSelectedAlbum: state.albums[albumId]
       }
     case ADD_IMAGE_TO_FAVOURITES:
@@ -48,8 +53,8 @@ const albumAppReducer = (state = initialState, action) => {
         ...state,
         albums: {
           ...state.albums,
-          'Favourites': [ 
-            ...state.albums['Favourites'], 
+          'Favourites': [
+            ...state.albums['Favourites'],
             {
               ...action.image,
               isFavorited: true
@@ -69,10 +74,9 @@ const albumAppReducer = (state = initialState, action) => {
         isFavorited: false
       });
       clonedState.albums['Favourites'] = clonedState.albums['Favourites'].filter(imageFromSelectedAlbum => imageFromSelectedAlbum.id !== action.image.id);
-      clonedState.imagesFromSelectedAlbum = clonedState.imagesFromSelectedAlbum.filter(imageFromSelectedAlbum => imageFromSelectedAlbum.id !== action.image.id);
       return clonedState;
     }
-    case SET_IS_IMAGE_FAVED:
+    case SET_IMAGE_FAVED: {
       const albumIndex = action.payload.image.albumId - 1;
       const imageIndexToFav = state.albums[albumIndex].findIndex(imageInAlbum => imageInAlbum.id === action.payload.image.id);
       if (imageIndexToFav === -1) {
@@ -83,13 +87,33 @@ const albumAppReducer = (state = initialState, action) => {
         ...action.payload.image,
         isFavorited: action.payload.isFavorited
       });
-      if (action.payload.isFavorited) {
+      clonedState.imagesFromSelectedAlbum.splice(imageIndexToFav, 1, {
+        ...action.payload.image,
+        isFavorited: action.payload.isFavorited
+      });
+      return clonedState;
+    }
+    case SET_IMAGE_UNFAVED: {
+      const albumIndex = action.payload.image.albumId - 1;
+      const imageIndexToFav = state.albums[albumIndex].findIndex(imageInAlbum => imageInAlbum.id === action.payload.image.id);
+      if (imageIndexToFav === -1) {
+        return state;
+      }
+      let clonedState = JSON.parse(JSON.stringify(state));
+      clonedState.albums[albumIndex].splice(imageIndexToFav, 1, {
+        ...action.payload.image,
+        isFavorited: action.payload.isFavorited
+      });
+      if (clonedState.selectedAlbumName === 'Favourites') {
+        clonedState.imagesFromSelectedAlbum = clonedState.imagesFromSelectedAlbum.filter(image => image.id !== action.payload.image.id);
+      } else {
         clonedState.imagesFromSelectedAlbum.splice(imageIndexToFav, 1, {
           ...action.payload.image,
           isFavorited: action.payload.isFavorited
         });
       }
       return clonedState;
+    }
     default:
       return state;
   }

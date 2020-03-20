@@ -1,24 +1,15 @@
 import React from 'react';
 
 const Albums = ({ albums, handleAlbumSelect }) => (
-  <div style={{ 
-      float: 'left', 
-      background: 'steelblue', 
-      width: '10vw',
-      height: '100vh', 
-      boxSizing: 'border-box', 
-      margin: 0, 
-      padding: 0,
-      overflowY: 'scroll'
-    }}>
+  <div className="albumsContainer">
     {
       albums &&
       Object.keys(albums).map(albumId =>
         <div 
           key={albumId} 
-          style={{ cursor: 'pointer', boxSizing: 'border-box', margin: '5px 0px', textAlign: 'center' }}
+          className="album"
           onClick={() => handleAlbumSelect(albumId)}
-        >{`album_${albumId}`}</div>
+        >{`Album ${albumId}`}</div>
       )
     }
   </div>

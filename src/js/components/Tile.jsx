@@ -18,18 +18,27 @@ const Tile = ({ image, addImageToFavourites, removeImageFromFavourites, setImage
       alt="My awesome image"
     /> */}
     <img src={image.thumbnailUrl} />
-    <h5 style={{ height: '10px', margin: 0 }}>{image.title}</h5>
-    <button 
-    style={{ position: 'relative', top: '-164px' }}
-    onClick={() => {
-      if (image.isFavorited) {
-        removeImageFromFavourites(image);
-        setImageUnfaved(image);
-      } else {
-        addImageToFavourites(image);
-        setImageFaved(image);
-      }
-    }}>{!image.isFavorited ? 'Favorite' : 'Unfavorite'}</button>
+    <h5 style={{ height: '10px', margin: 0, textAlign: 'center' }}>{image.title}</h5>
+    <button
+      style={{ 
+        position: 'relative', 
+        top: '-168px', 
+        left: '-5px', 
+        border: 'none', 
+        borderBottomRightRadius: '10px', 
+        backgroundColor: '#414a4c', 
+        color: '#f0fff0',
+        cursor: 'pointer'
+      }}
+      onClick={() => {
+        if (image.isFavorited) {
+          removeImageFromFavourites(image);
+          setImageUnfaved(image);
+        } else {
+          addImageToFavourites(image);
+          setImageFaved(image);
+        }
+      }}>{!image.isFavorited ? 'Favorite' : 'Unfavorite'}</button>
   </div>
 );
 

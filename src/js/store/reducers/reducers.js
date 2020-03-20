@@ -1,4 +1,10 @@
-import { ADD_DATA, SELECT_ALBUM, ADD_IMAGE_TO_FAVOURITES } from '../actions/actionTypes';
+import { 
+  ADD_DATA, 
+  SELECT_ALBUM, 
+  ADD_IMAGE_TO_FAVOURITES,
+  REMOVE_IMAGE_FROM_FAVOURITES,
+  SET_IS_IMAGE_FAVED
+} from '../actions/actionTypes';
 
 const initialState = {
   albums: {},
@@ -8,6 +14,7 @@ const initialState = {
 const albumAppReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_DATA:
+      const FIRST_ALBUM_INDEX = '0';
       const { payload } = action;
       const albums = {};
       payload.forEach(picture => {
@@ -24,7 +31,7 @@ const albumAppReducer = (state = initialState, action) => {
       return {
         ...state,
         albums,
-        imagesFromSelectedAlbum: albums['0']
+        imagesFromSelectedAlbum: albums[FIRST_ALBUM_INDEX]
       };
     case SELECT_ALBUM:
       const { albumId } = action;
@@ -41,9 +48,32 @@ const albumAppReducer = (state = initialState, action) => {
         ...state,
         albums: {
           ...state.albums,
-          'Favourites': [ ...state.albums['Favourites'], action.image]
+          'Favourites': [ 
+            ...state.albums['Favourites'], 
+            {
+              ...action.image,
+              isFavorited: true
+            }
+          ]
         }
       }
+    case SET_IS_IMAGE_FAVED:
+      const albumIndex = action.payload.image.albumId - 1;
+      const imageIndexToFav = state.albums[albumIndex].findIndex(imageInAlbum => imageInAlbum.id === action.payload.image.id);
+      console.log('faving image on index', imageIndexToFav, 'at album index', albumIndex);
+      if (imageIndexToFav === -1) {
+        return state;
+      }
+      let clonedState = JSON.parse(JSON.stringify(state));
+      clonedState.albums[albumIndex].splice(imageIndexToFav, 1, {
+        ...action.payload.image,
+        isFavorited: action.payload.isFavorited
+      });
+      clonedState.imagesFromSelectedAlbum.splice(imageIndexToFav, 1, {
+        ...action.payload.image,
+        isFavorited: action.payload.isFavorited
+      });
+      return clonedState;
     default:
       return state;
   }

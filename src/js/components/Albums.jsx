@@ -14,7 +14,11 @@ const Albums = ({ albums, handleAlbumSelect }) => (
     {
       albums &&
       Object.keys(albums).map(albumId =>
-        <div key={albumId} onClick={() => handleAlbumSelect(albumId)}>{albumId}</div>
+        <div 
+          key={albumId} 
+          style={{ cursor: 'pointer', boxSizing: 'border-box', margin: '5px 0px', textAlign: 'center' }}
+          onClick={() => handleAlbumSelect(albumId)}
+        >{`album_${albumId}`}</div>
       )
     }
   </div>

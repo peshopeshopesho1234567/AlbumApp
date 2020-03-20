@@ -3,7 +3,6 @@ import {
   SELECT_ALBUM,
   ADD_IMAGE_TO_FAVOURITES,
   REMOVE_IMAGE_FROM_FAVOURITES,
-  SET_IS_IMAGE_FAVED,
   SET_IMAGE_FAVED,
   SET_IMAGE_UNFAVED
 } from './actionTypes';
@@ -28,11 +27,6 @@ const removeImageFromFavourites = image => ({
   image
 });
 
-const setIsImageFaved = payload => ({
-  type: SET_IS_IMAGE_FAVED,
-  payload
-});
-
 const setImageFaved = image => ({
   type: SET_IMAGE_FAVED,
   payload: {
@@ -54,7 +48,6 @@ export {
   selectAlbum,
   addImageToFavourites,
   removeImageFromFavourites,
-  setIsImageFaved,
   setImageFaved,
   setImageUnfaved
 }

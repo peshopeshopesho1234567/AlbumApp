@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { 
   addImageToFavourites, 
   removeImageFromFavourites,
-  setIsImageFaved,
   setImageFaved,
   setImageUnfaved
 } from '../store/actions/actionCreators';
@@ -32,7 +31,6 @@ const Images = ({ images, addImageToFavourites, removeImageFromFavourites, setIm
 const mapDispatchToProps = { 
   addImageToFavourites, 
   removeImageFromFavourites,
-  setIsImageFaved,
   setImageFaved,
   setImageUnfaved
 };

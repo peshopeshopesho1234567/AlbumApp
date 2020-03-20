@@ -9,6 +9,7 @@ import axios from 'axios';
 
 import { PersistGate } from 'redux-persist/integration/react';
 
+import Header from './Header.jsx';
 import Albums from './Albums.jsx';
 import Images from './Images.jsx';
 
@@ -52,6 +53,7 @@ class Form extends Component {
     const { albums, imagesFromSelectedAlbum } = this.props;
     return (
       <div>
+        <Header/>
         <Albums
           albums={albums}
           handleAlbumSelect={this.handleAlbumSelect.bind(this)}

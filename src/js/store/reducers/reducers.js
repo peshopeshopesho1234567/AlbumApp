@@ -3,7 +3,6 @@ import { ADD_DATA, SELECT_ALBUM, ADD_IMAGE_TO_FAVOURITES } from '../actions/acti
 const initialState = {
   albums: {},
   imagesFromSelectedAlbum: [],
-  favouriteImages: []
 };
 
 const albumAppReducer = (state = initialState, action) => {
@@ -20,11 +19,12 @@ const albumAppReducer = (state = initialState, action) => {
           ...picture,
           isFavorited: false
         });
+        albums['Favourites'] = [];
       });
       return {
         ...state,
         albums,
-        imagesFromSelectedAlbum: albums['1']
+        imagesFromSelectedAlbum: albums['0']
       };
     case SELECT_ALBUM:
       const { albumId } = action;
@@ -33,13 +33,16 @@ const albumAppReducer = (state = initialState, action) => {
         imagesFromSelectedAlbum: state.albums[albumId]
       }
     case ADD_IMAGE_TO_FAVOURITES:
-      const hasImgBeenAdded = state.favouriteImages.some(favImage => favImage.id === action.image.id);
+      const hasImgBeenAdded = state.albums['Favourites'].some(favImage => favImage.id === action.image.id);
       if (hasImgBeenAdded) {
         return state;
       }
       return {
         ...state,
-        favouriteImages: [...state.favouriteImages, action.image]
+        albums: {
+          ...state.albums,
+          'Favourites': [ ...state.albums['Favourites'], action.image]
+        }
       }
     default:
       return state;

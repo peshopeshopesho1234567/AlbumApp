@@ -25,6 +25,7 @@ class Form extends Component {
   }
 
   handleAlbumSelect(albumId) {
+    console.log('selecting album with id of', albumId);
     this.props.selectAlbum(albumId);
   }
 

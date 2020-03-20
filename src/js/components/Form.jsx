@@ -13,7 +13,10 @@ import { addData, selectAlbum } from '../store/actions/actionCreators';
 
 import '../../styles/app.css';
 
-const store = createStore(albumAppReducer);
+const store = createStore(
+  albumAppReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 class Form extends Component {
 

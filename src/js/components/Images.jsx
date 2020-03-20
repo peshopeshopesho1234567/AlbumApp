@@ -16,10 +16,11 @@ const Images = ({ images, addImageToFavourites, removeImageFromFavourites, setIs
         <button onClick={() => {
           if (image.isFavorited) {
             removeImageFromFavourites(image);
+            setIsImageFaved({ image, isFavorited: false });
           } else {
             addImageToFavourites(image);
+            setIsImageFaved({ image, isFavorited: true });
           }
-          setIsImageFaved({ image, isFavorited: !image.isFavorited });
         }}>{!image.isFavorited ? 'Favorite' : 'Unfavorite'}</button>
       </div>
     ))}

@@ -57,10 +57,24 @@ const albumAppReducer = (state = initialState, action) => {
           ]
         }
       }
+    case REMOVE_IMAGE_FROM_FAVOURITES: {
+      let albumIndex = action.image.albumId - 1;
+      const imageIndexToUnFav = state.albums[albumIndex].findIndex(imageInAlbum => imageInAlbum.id === action.image.id);
+      if (imageIndexToUnFav === -1) {
+        return state;
+      }
+      let clonedState = JSON.parse(JSON.stringify(state));
+      clonedState.albums[albumIndex].splice(imageIndexToUnFav, 1, {
+        ...action.image,
+        isFavorited: false
+      });
+      clonedState.albums['Favourites'] = clonedState.albums['Favourites'].filter(imageFromSelectedAlbum => imageFromSelectedAlbum.id !== action.image.id);
+      clonedState.imagesFromSelectedAlbum = clonedState.imagesFromSelectedAlbum.filter(imageFromSelectedAlbum => imageFromSelectedAlbum.id !== action.image.id);
+      return clonedState;
+    }
     case SET_IS_IMAGE_FAVED:
       const albumIndex = action.payload.image.albumId - 1;
       const imageIndexToFav = state.albums[albumIndex].findIndex(imageInAlbum => imageInAlbum.id === action.payload.image.id);
-      console.log('faving image on index', imageIndexToFav, 'at album index', albumIndex);
       if (imageIndexToFav === -1) {
         return state;
       }
@@ -69,10 +83,12 @@ const albumAppReducer = (state = initialState, action) => {
         ...action.payload.image,
         isFavorited: action.payload.isFavorited
       });
-      clonedState.imagesFromSelectedAlbum.splice(imageIndexToFav, 1, {
-        ...action.payload.image,
-        isFavorited: action.payload.isFavorited
-      });
+      if (action.payload.isFavorited) {
+        clonedState.imagesFromSelectedAlbum.splice(imageIndexToFav, 1, {
+          ...action.payload.image,
+          isFavorited: action.payload.isFavorited
+        });
+      }
       return clonedState;
     default:
       return state;

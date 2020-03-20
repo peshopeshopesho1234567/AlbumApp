@@ -45,6 +45,7 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log('the state is', state);
   return {
     albums: state.albums,
     imagesFromSelectedAlbum: state.imagesFromSelectedAlbum

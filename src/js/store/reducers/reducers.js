@@ -1,8 +1,9 @@
-import { ADD_DATA, SELECT_ALBUM } from '../actions/actionTypes';
+import { ADD_DATA, SELECT_ALBUM, ADD_IMAGE_TO_FAVOURITES } from '../actions/actionTypes';
 
 const initialState = {
   albums: {},
-  imagesFromSelectedAlbum: []
+  imagesFromSelectedAlbum: [],
+  favouriteImages: []
 };
 
 const albumAppReducer = (state = initialState, action) => {
@@ -15,10 +16,13 @@ const albumAppReducer = (state = initialState, action) => {
         if (!albums[albumIndex]) {
           albums[albumIndex] = [];
         }
-        albums[albumIndex].push(picture);
-        albums['favourites'] = [];
+        albums[albumIndex].push({
+          ...picture,
+          isFavorited: false
+        });
       });
       return {
+        ...state,
         albums,
         imagesFromSelectedAlbum: albums['1']
       };
@@ -27,6 +31,15 @@ const albumAppReducer = (state = initialState, action) => {
       return {
         ...state,
         imagesFromSelectedAlbum: state.albums[albumId]
+      }
+    case ADD_IMAGE_TO_FAVOURITES:
+      const hasImgBeenAdded = state.favouriteImages.some(favImage => favImage.id === action.image.id);
+      if (hasImgBeenAdded) {
+        return state;
+      }
+      return {
+        ...state,
+        favouriteImages: [...state.favouriteImages, action.image]
       }
     default:
       return state;

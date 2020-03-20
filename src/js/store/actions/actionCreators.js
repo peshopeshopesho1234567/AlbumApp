@@ -1,4 +1,4 @@
-import { ADD_DATA, SELECT_ALBUM } from './actionTypes';
+import { ADD_DATA, SELECT_ALBUM, ADD_IMAGE_TO_FAVOURITES } from './actionTypes';
 
 const addData = payload => ({
     type: ADD_DATA,
@@ -10,7 +10,13 @@ const selectAlbum = albumId => ({
     albumId
 });
 
+const addImageToFavourites = image => ({
+    type: ADD_IMAGE_TO_FAVOURITES,
+    image
+});
+
 export {
     addData,
-    selectAlbum
+    selectAlbum,
+    addImageToFavourites
 }

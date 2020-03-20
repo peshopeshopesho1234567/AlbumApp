@@ -1,14 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Images = ({ images }) => (
+import { addImageToFavourites } from '../store/actions/actionCreators';
+
+const Images = ({ images, addImageToFavourites }) => (
   <div>
     {images && images.map(image => (
       <div key={image.url}>
         <img src={image.thumbnailUrl} />
         <p>{image.title}</p>
+        <button onClick={() => addImageToFavourites(image)}>{!image.isFavorited ? 'Favorite' : 'Unfavorite'}</button>
       </div>
     ))}
   </div>
 );
 
-export default Images;
+const mapDispatchToProps = { addImageToFavourites };
+
+export default connect(null, mapDispatchToProps)(Images);

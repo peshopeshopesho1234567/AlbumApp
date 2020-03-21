@@ -59,7 +59,6 @@ class Form extends Component {
           handleAlbumSelect={this.handleAlbumSelect.bind(this)}
         />
         <Images
-          images={imagesFromSelectedAlbum}
         />
       </div>
     );

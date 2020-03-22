@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import {
   ADD_DATA,
   SELECT_ALBUM,
@@ -77,7 +79,7 @@ const albumAppReducer = (state = initialState, action) => {
       if (imageIndexToUnFav === -1) {
         return state;
       }
-      let clonedState = JSON.parse(JSON.stringify(state));
+      let clonedState = _.cloneDeep(state);
       clonedState.albums[albumIndex].splice(imageIndexToUnFav, 1, {
         ...action.image,
         isFavorited: false
@@ -92,7 +94,7 @@ const albumAppReducer = (state = initialState, action) => {
       if (imageIndexToFav === -1) {
         return state;
       }
-      let clonedState = JSON.parse(JSON.stringify(state));
+      let clonedState = _.cloneDeep(state);
       clonedState.albums[albumIndex].splice(imageIndexToFav, 1, {
         ...action.payload.image,
         isFavorited: action.payload.isFavorited
@@ -109,7 +111,7 @@ const albumAppReducer = (state = initialState, action) => {
       if (imageIndexToFav === -1) {
         return state;
       }
-      let clonedState = JSON.parse(JSON.stringify(state));
+      let clonedState = _.cloneDeep(state);
       clonedState.albums[albumIndex].splice(imageIndexToFav, 1, {
         ...action.payload.image,
         isFavorited: action.payload.isFavorited

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Albums = ({ albums, selectedAlbumName, handleAlbumSelect }) => (
+const Albums = ({ albums, selectedAlbumName, albumsWithFavedImages, handleAlbumSelect }) => (
   <div className="albumsContainer">
     {
       albums &&
@@ -10,14 +10,15 @@ const Albums = ({ albums, selectedAlbumName, handleAlbumSelect }) => (
           key={albumId} 
           className={`album ${albumId === selectedAlbumName ? 'albumSelected' : ''}`}
           onClick={() => handleAlbumSelect(albumId)}
-        >{`Album ${albumId}`}</div>
+      >{`Album ${albumId}`} {(albumsWithFavedImages[albumId] !== 0) && <span title="This album has favourite images">*</span>}</div>
       )
     }
   </div>
 );
 
 const mapStateToProps = state => ({
-  selectedAlbumName: state.selectedAlbumName
+  selectedAlbumName: state.selectedAlbumName,
+  albumsWithFavedImages: state.albumsWithFavedImages
 });
 
 export default connect(mapStateToProps)(Albums);

@@ -11,6 +11,7 @@ const initialState = {
   selectedAlbumName: '',
   albums: {},
   imagesFromSelectedAlbum: [],
+  albumsWithFavedImages: {}
 };
 
 const albumAppReducer = (state = initialState, action) => {
@@ -19,7 +20,7 @@ const albumAppReducer = (state = initialState, action) => {
       const FIRST_ALBUM_INDEX = '0';
       const { payload } = action;
       const albums = {};
-      
+      const albumsWithFavedImages = {};
       payload.forEach(picture => {
         const albumIndex = picture.albumId - 1;
         if (!albums[albumIndex]) {
@@ -29,14 +30,17 @@ const albumAppReducer = (state = initialState, action) => {
           ...picture,
           isFavorited: false
         });
+        albumsWithFavedImages[albumIndex] = 0;
       });
-      
+
       albums['Favourites'] = [];
+      albumsWithFavedImages['Favourites'] = 0;
       return {
         ...state,
         selectedAlbumName: FIRST_ALBUM_INDEX,
         albums,
-        imagesFromSelectedAlbum: [...albums[FIRST_ALBUM_INDEX]]
+        imagesFromSelectedAlbum: [...albums[FIRST_ALBUM_INDEX]],
+        albumsWithFavedImages
       };
     case SELECT_ALBUM:
       const { albumId } = action;
@@ -50,6 +54,8 @@ const albumAppReducer = (state = initialState, action) => {
       if (hasImgBeenAdded) {
         return state;
       }
+      console.log('marking album as having favourites', action.image.albumId);
+      console.log('the state is', state);
       return {
         ...state,
         albums: {
@@ -61,6 +67,10 @@ const albumAppReducer = (state = initialState, action) => {
               isFavorited: true
             }
           ]
+        },
+        albumsWithFavedImages: {
+          ...state.albumsWithFavedImages,
+          [action.image.albumId - 1]: state.albumsWithFavedImages[action.image.albumId - 1] + 1
         }
       }
     case REMOVE_IMAGE_FROM_FAVOURITES: {
@@ -75,6 +85,7 @@ const albumAppReducer = (state = initialState, action) => {
         isFavorited: false
       });
       clonedState.albums['Favourites'] = clonedState.albums['Favourites'].filter(imageFromSelectedAlbum => imageFromSelectedAlbum.id !== action.image.id);
+      clonedState.albumsWithFavedImages[action.image.albumId - 1] = clonedState.albumsWithFavedImages[action.image.albumId - 1] - 1;
       return clonedState;
     }
     case SET_IMAGE_FAVED: {

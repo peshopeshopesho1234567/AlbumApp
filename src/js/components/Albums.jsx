@@ -1,24 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Albums = ({ albums, selectedAlbumName, albumsWithFavedImages, handleAlbumSelect }) => (
+import { selectAlbum } from '../store/actions/actionCreators';
+
+const Albums = ({ albums, selectedAlbumName, albumsWithFavedImages, selectAlbum }) => (
   <div className="albumsContainer">
     {
       albums &&
       Object.keys(albums).map(albumId =>
-        <div 
-          key={albumId} 
+        <div
+          key={albumId}
           className={`album ${albumId === selectedAlbumName ? 'albumSelected' : ''}`}
-          onClick={() => handleAlbumSelect(albumId)}
-      >{`Album ${albumId}`} {(albumsWithFavedImages[albumId] !== 0) && <span title="This album has favourite images">*</span>}</div>
+          onClick={() => selectAlbum(albumId)}
+        >
+          {`Album ${albumId}`} {(albumsWithFavedImages[albumId] !== 0) &&
+            <span title={`This album has ${albumsWithFavedImages[albumId]} favourite images`}>*</span>}
+        </div>
       )
     }
   </div>
 );
 
 const mapStateToProps = state => ({
+  albums: state.albums,
   selectedAlbumName: state.selectedAlbumName,
   albumsWithFavedImages: state.albumsWithFavedImages
 });
 
-export default connect(mapStateToProps)(Albums);
+const mapDispatchToProps = { selectAlbum };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Albums);

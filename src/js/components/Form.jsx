@@ -14,7 +14,7 @@ import Albums from './Albums.jsx';
 import Images from './Images.jsx';
 
 import albumAppReducer from '../store/reducers/reducers';
-import { addData, selectAlbum } from '../store/actions/actionCreators';
+import { addData } from '../store/actions/actionCreators';
 
 import '../../styles/app.css';
 
@@ -45,34 +45,22 @@ class Form extends Component {
     }
   }
 
-  handleAlbumSelect(albumId) {
-    this.props.selectAlbum(albumId);
-  }
-
   render() {
-    const { albums, imagesFromSelectedAlbum } = this.props;
     return (
       <div>
-        <Header/>
-        <Albums
-          albums={albums}
-          handleAlbumSelect={this.handleAlbumSelect.bind(this)}
-        />
-        <Images
-        />
+        <Header />
+        <Albums />
+        <Images />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    albums: state.albums,
-    imagesFromSelectedAlbum: state.imagesFromSelectedAlbum
-  }
-};
+const mapStateToProps = state => ({
+  albums: state.albums,
+});
 
-const mapDispatchToProps = { addData, selectAlbum };
+const mapDispatchToProps = { addData };
 
 const ConnectedForm = connect(mapStateToProps, mapDispatchToProps)(Form);
 export default ConnectedForm;

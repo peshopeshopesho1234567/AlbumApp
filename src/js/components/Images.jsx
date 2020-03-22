@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -28,7 +29,9 @@ class Images extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.images === state.images) {
+    const propImgsWoFavFlag = _.map(props.images, image => _.omit(image, ['isFavorited']));
+    const stateImgsWoFavFlag = _.map(state.images, image => _.omit(image, ['isFavorited']));
+    if (_.isEqual(propImgsWoFavFlag, stateImgsWoFavFlag)) {
       return null;
     }
     return { images: props.images, visibleImages: props.images.slice(0, NUM_OF_IMAGES_PER_PAGE) };

@@ -96,11 +96,11 @@ const albumAppReducer = (state = initialState, action) => {
         albums: {
           ...state.albums,
           [FAVOURITES_ALBUM_NAME]: [
-            ...state.albums[FAVOURITES_ALBUM_NAME],
             {
               ...image,
               isFavorited: true
-            }
+            },
+            ...state.albums[FAVOURITES_ALBUM_NAME]
           ]
         },
         albumsWithFavedImages: {

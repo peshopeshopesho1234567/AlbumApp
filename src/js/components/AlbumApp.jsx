@@ -12,12 +12,12 @@ class AlbumApp extends Component {
 
   componentDidMount() {
     const { albums } = this.props;
-    // if (!albums) {
+    if (!albums) {
       axios.get('https://jsonplaceholder.typicode.com/photos')
         .then(res => {
           this.props.addData(res.data);
         });
-    // }
+    }
   }
 
   render() {

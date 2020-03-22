@@ -44,6 +44,10 @@ function removeImgFromVisibleImages({ clonedState, imageToRemove }) {
   return clonedState;
 }
 
+function albumIndexFromId(albumId) {
+  return albumId - 1;
+}
+
 const albumAppReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_DATA: {
@@ -53,7 +57,7 @@ const albumAppReducer = (state = initialState, action) => {
       albums[FAVOURITES_ALBUM_NAME] = [];
       albumsWithFavedImages[FAVOURITES_ALBUM_NAME] = 0;
       payload.forEach(picture => {
-        const albumIndex = picture.albumId - 1;
+        const albumIndex = albumIndexFromId(picture.albumId);
         if (!albums[albumIndex]) {
           albums[albumIndex] = [];
         }
@@ -82,6 +86,7 @@ const albumAppReducer = (state = initialState, action) => {
     }
     case ADD_IMAGE_TO_FAVOURITES: {
       const { image } = action;
+      const albumIndex = albumIndexFromId(image.albumId);
       const hasImgBeenAdded = state.albums[FAVOURITES_ALBUM_NAME].some(favImage => favImage.id === image.id);
       if (hasImgBeenAdded) {
         return state;
@@ -100,13 +105,13 @@ const albumAppReducer = (state = initialState, action) => {
         },
         albumsWithFavedImages: {
           ...state.albumsWithFavedImages,
-          [image.albumId - 1]: state.albumsWithFavedImages[image.albumId - 1] + 1
+          [albumIndex]: state.albumsWithFavedImages[albumIndex] + 1
         }
       }
     }
     case REMOVE_IMAGE_FROM_FAVOURITES: {
       const { image } = action;
-      let albumIndex = image.albumId - 1;
+      let albumIndex = albumIndexFromId(image.albumId);
       const imageIndexToUnFav = findImgIndex({ state, albumIndex, image });
       if (imageIndexToUnFav === -1) {
         return state;
@@ -114,12 +119,12 @@ const albumAppReducer = (state = initialState, action) => {
       let clonedState = _.cloneDeep(state);
       clonedState = changeFavStatusInAlbum({ clonedState, albumIndex, imageIndexToFav: imageIndexToUnFav, image, isFavorited: false });
       clonedState.albums[FAVOURITES_ALBUM_NAME] = clonedState.albums[FAVOURITES_ALBUM_NAME].filter(imageFromSelectedAlbum => imageFromSelectedAlbum.id !== image.id);
-      clonedState.albumsWithFavedImages[image.albumId - 1] = clonedState.albumsWithFavedImages[image.albumId - 1] - 1;
+      clonedState.albumsWithFavedImages[albumIndex] = clonedState.albumsWithFavedImages[albumIndex] - 1;
       return clonedState;
     }
     case SET_IMAGE_FAVED: {
       const { image, isFavorited } = action.payload;
-      const albumIndex = image.albumId - 1;
+      const albumIndex = albumIndexFromId(image.albumId);
       const imageIndexToFav = findImgIndex({ state, albumIndex, image });
       if (imageIndexToFav === -1) {
         return state;
@@ -131,7 +136,7 @@ const albumAppReducer = (state = initialState, action) => {
     }
     case SET_IMAGE_UNFAVED: {
       const { image, isFavorited } = action.payload;
-      const albumIndex = image.albumId - 1;
+      const albumIndex = albumIndexFromId(image.albumId);
       const imageIndexToFav = findImgIndex({ state, albumIndex, image });
       if (imageIndexToFav === -1) {
         return state;

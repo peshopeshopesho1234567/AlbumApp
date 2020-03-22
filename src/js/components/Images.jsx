@@ -40,6 +40,7 @@ class Images extends React.Component {
   render() {
     const { visibleImages } = this.state;
     const { images } = this.props;
+    console.log('the visible images are', visibleImages);
     return (
       <div className="imagesContainer">
         <InfiniteScroll
@@ -55,8 +56,17 @@ class Images extends React.Component {
             />
           ))}
         </InfiniteScroll>
+        {(visibleImages.length === 0) && <div style={styles.emptyAlbum}>The album is empty</div>}
       </div>
     )
+  }
+}
+
+const styles = {
+  emptyAlbum: { 
+    textAlign: 'center', 
+    fontSize: '30px', 
+    fontWeight: 'bold' 
   }
 }
 

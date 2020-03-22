@@ -15,15 +15,15 @@ const Tile = ({ image, addImageToFavourites, removeImageFromFavourites, setImage
   const [imgHasFailed, setImgHasFailed] = useState(false);
   const [isImgFaved, setImgFaved] = useState(image.isFavorited);
   return (
-    <div style={{ float: 'left', width: '150px', margin: '10px' }}>
+    <div style={styles.tile}>
       <Image
         src={image.thumbnailUrl}
         setImgLoaded={setImgLoaded}
         setImgHasFailed={setImgHasFailed}
       />
-      {imgLoaded && <h5 style={{ height: '10px', margin: 0, textAlign: 'center' }}>{image.title}</h5>}
-      {!imgLoaded && <h5 style={{ height: '10px', margin: 0, textAlign: 'center' }}>The image is currently being loaded...</h5>}
-      {imgHasFailed && <h5 style={{ height: '10px', margin: 0, textAlign: 'center' }}>The image has failed to load!</h5>}
+      {imgLoaded && <h5 style={styles.tileText}>{image.title}</h5>}
+      {!imgLoaded && <h5 style={styles.tileText}>The image is currently being loaded...</h5>}
+      {imgHasFailed && <h5 style={styles.tileText}>The image has failed to load!</h5>}
       {imgLoaded && <button
         className="tile"
         onClick={() => {
@@ -40,6 +40,19 @@ const Tile = ({ image, addImageToFavourites, removeImageFromFavourites, setImage
       }
     </div>
   );
+}
+
+const styles = {
+  tile: { 
+    float: 'left', 
+    width: '150px', 
+    margin: '10px' 
+  },
+  tileText: { 
+    height: '10px', 
+    margin: 0, 
+    textAlign: 'center' 
+  }
 }
 
 const mapDispatchToProps = {

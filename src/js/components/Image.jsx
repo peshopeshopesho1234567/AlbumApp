@@ -17,24 +17,25 @@ const Image = ({ src, setImgLoaded, setImgHasFailed }) => {
         }}
       />}
       {!hasImgLoaded && <div style={{
-        boxSizing: 'border-box',
-        margin: 0,
-        padding: 55,
-        width: 150,
-        height: 150,
-        backgroundColor: 'seagreen',
+        ...styles.imgLoadingPlaceholder(false),
         opacity: 0.5
       }}></div>}
-      {hasFailedToLoad &&  <div style={{
-        boxSizing: 'border-box',
-        margin: 0,
-        padding: 55,
-        width: 150,
-        height: 150,
-        backgroundColor: 'tomato',
+      {hasFailedToLoad && <div style={{
+        ...styles.imgLoadingPlaceholder(true),
       }}></div>}
     </React.Fragment>
   );
+}
+
+const styles = {
+  imgLoadingPlaceholder: isErrorPlaceholder => ({
+    boxSizing: 'border-box',
+    margin: 0,
+    padding: 55,
+    width: 150,
+    height: 150,
+    backgroundColor: isErrorPlaceholder ? 'tomato' : 'seagreen'
+  })
 }
 
 export default Image;

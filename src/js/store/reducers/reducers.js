@@ -17,10 +17,12 @@ const initialState = {
 const albumAppReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_DATA:
-      const FIRST_ALBUM_INDEX = '0';
+      const INITIAL_ALBUM_INDEX = '99';
       const { payload } = action;
       const albums = {};
       const albumsWithFavedImages = {};
+      albums['Favourites'] = [];
+      albumsWithFavedImages['Favourites'] = 0;
       payload.forEach(picture => {
         const albumIndex = picture.albumId - 1;
         if (!albums[albumIndex]) {
@@ -33,11 +35,9 @@ const albumAppReducer = (state = initialState, action) => {
         albumsWithFavedImages[albumIndex] = 0;
       });
 
-      albums['Favourites'] = [];
-      albumsWithFavedImages['Favourites'] = 0;
       return {
         ...state,
-        selectedAlbumName: FIRST_ALBUM_INDEX,
+        selectedAlbumName: INITIAL_ALBUM_INDEX,
         albums,
         imagesFromSelectedAlbum: [...albums[FIRST_ALBUM_INDEX]],
         albumsWithFavedImages

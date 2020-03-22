@@ -7,7 +7,7 @@ const Albums = ({ albums, selectedAlbumName, albumsWithFavedImages, selectAlbum 
   <div className="albumsContainer">
     {
       albums &&
-      Object.keys(albums).map(albumId =>
+      Object.keys(albums).reverse().map(albumId =>
         <div
           key={albumId}
           className={`album ${albumId === selectedAlbumName ? 'albumSelected' : ''}`}

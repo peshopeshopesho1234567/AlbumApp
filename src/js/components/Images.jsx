@@ -40,7 +40,6 @@ class Images extends React.Component {
   render() {
     const { visibleImages } = this.state;
     const { images } = this.props;
-    console.log('the visible images are', visibleImages);
     return (
       <div className="imagesContainer">
         <InfiniteScroll

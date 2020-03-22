@@ -1,0 +1,10 @@
+@import './variables';
+
+.albumAppHeader { 
+  height: 5vh; 
+  color: $white; 
+  background-color: $dark-gray; 
+  text-align: center; 
+  font-size: 30px;
+  font-weight: bold;
+}

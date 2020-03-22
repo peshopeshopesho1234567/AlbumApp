@@ -8,8 +8,6 @@ import Images from './Images.jsx';
 
 import { addData } from '../store/actions/actionCreators';
 
-import '../../styles/app.css';
-
 class AlbumApp extends Component {
 
   componentDidMount() {

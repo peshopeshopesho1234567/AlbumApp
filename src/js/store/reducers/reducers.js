@@ -54,8 +54,6 @@ const albumAppReducer = (state = initialState, action) => {
       if (hasImgBeenAdded) {
         return state;
       }
-      console.log('marking album as having favourites', action.image.albumId);
-      console.log('the state is', state);
       return {
         ...state,
         albums: {

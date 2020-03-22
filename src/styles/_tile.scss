@@ -1,0 +1,12 @@
+@import './variables';
+
+.tile { 
+  position: relative; 
+  top: -168px; 
+  left: -5px; 
+  border: none; 
+  border-bottom-right-radius: 10px; 
+  background-color: $outer-space; 
+  color: $honeydew;
+  cursor: pointer;
+}

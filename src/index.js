@@ -8,6 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import AlbumApp from './js/components/AlbumApp.jsx';
 
 import 'normalize.css';
+import './styles/app.scss';
 
 const wrapper = document.getElementById("container");
 ReactDOM.render(

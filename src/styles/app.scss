@@ -1,0 +1,13 @@
+@import "./variables";
+@import "./images";
+@import "./albums";
+@import "./appHeader";
+@import "./tile";
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $wild-smoke;
+  font-family: Arial, sans-serif;
+}
+
